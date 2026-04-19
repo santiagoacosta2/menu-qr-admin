@@ -44,7 +44,6 @@ No funciona con powershell o cmd. Usar WSL o Git Bash.
 
 **Recomienndo usar Git Bash desde la terminnal de VSCode para evitar problemas con el hook.**
 ```bash
-gga init                # Create .gga config
 gga install             # Install git hook
 # Edit .gga to set your PROVIDER
 # Create AGENTS.md with your coding standards
