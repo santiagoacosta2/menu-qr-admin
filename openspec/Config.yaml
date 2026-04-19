@@ -9,7 +9,7 @@ context: |
   Architecture: Next.js App Router
   Runtime: Node.js
   Package manager: npm
-  Testing: E2E with Playwright (optional for MVP)
+  Testing: Unit with Vitest + E2E with Playwright
   Style: ESLint flat config
   Dev server: MUST always use port 3000
   Auth: Better Auth con DNI (no email)
@@ -38,11 +38,11 @@ rules:
 
   apply:
     - Follow existing patterns
-    - Do NOT write tests unless requested
 
   verify:
     - TypeScript check
     - ESLint
+    - Unit tests (Vitest)
     - Production build
 
 # ARCHITECTURE
@@ -79,6 +79,8 @@ structure:
       layer: domain
     types:
       layer: domain
+    __tests__:
+      layer: application
 
 # NAMING
 
@@ -159,11 +161,55 @@ ai_constraints:
 
 testing:
   stack:
+    unit: Vitest
     e2e: Playwright
-    
 
   baseline:
-    required: false
+    required: true
+
+  rules:
+    - MUST test business logic (services, lib)
+    - MUST NOT test UI rendering unless critical
+    - MUST NOT test external libraries
+    - SHOULD mock database and network
+
+  coverage:
+    target: 70
+    include:
+      - services
+      - lib
+    exclude:
+      - ui
+      - config
+
+  structure:
+    unit:
+      location: src/__tests__
+      pattern: "*.test.ts"
 
   policies:
     no_false_green: true
+
+# VITEST
+
+vitest:
+  environment: node
+  globals: true
+  include:
+    - "src/__tests__/**/*.test.ts"
+  coverage:
+    reporter: [text, html]
+    thresholds:
+      lines: 70
+      functions: 70
+      branches: 70
+      statements: 70
+    failWhenThresholdNotMet: true
+    include:
+      - src/services/**
+      - src/lib/**
+    exclude:
+      - src/app/**
+      - src/components/**
+      - "**/*.config.ts"
+      - "**/*.d.ts"
