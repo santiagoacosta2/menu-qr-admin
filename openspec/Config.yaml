@@ -1,0 +1,167 @@
+# OpenSpec Config
+schema: spec-driven
+
+artifact_store:
+  mode: hybrid
+
+context: |
+  Tech stack: Next.js + React + TypeScript + Tailwind CSS + Prisma + PostgreSQL
+  Architecture: Next.js App Router
+  Runtime: Node.js
+  Package manager: npm
+  Testing: E2E with Playwright (optional for MVP)
+  Style: ESLint flat config
+  Dev server: MUST always use port 3000
+  Auth: Better Auth con DNI (no email)
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+    - Identify affected modules
+    - Estimate impact (performance, bundle, breaking changes)
+
+  specs:
+    - Use Given/When/Then
+    - Use RFC 2119 (MUST, SHOULD, MAY)
+    - Define measurable acceptance criteria
+
+  design:
+    - Document architecture decisions
+    - Provide module interaction overview
+
+  tasks:
+    - Group by phase
+    - Use hierarchical numbering
+    - Keep tasks small
+
+  apply:
+    - Follow existing patterns
+    - Do NOT write tests unless requested
+
+  verify:
+    - TypeScript check
+    - ESLint
+    - Production build
+
+# ARCHITECTURE
+
+architecture:
+  layering:
+    ui:
+      includes: [app, components]
+    application:
+      includes: [actions, services]
+    domain:
+      includes: [lib, types]
+    infrastructure:
+      includes: [prisma, database]
+
+  constraints:
+    - ui MUST NOT access database directly
+    - domain MUST NOT depend on ui
+    - services MUST orchestrate logic, not contain business rules
+
+# PROJECT STRUCTURE
+
+structure:
+  src:
+    app:
+      layer: ui
+    components:
+      layer: ui
+    actions:
+      layer: application
+    services:
+      layer: application
+    lib:
+      layer: domain
+    types:
+      layer: domain
+
+# NAMING
+
+conventions:
+  naming:
+    components: PascalCase
+    hooks: useCamelCase
+    files: kebab-case
+    variables: camelCase
+    types: PascalCase
+    constants: UPPER_SNAKE_CASE
+
+# REACT
+
+react_rules:
+  components:
+    - MUST be function components
+    - MUST NOT exceed 200 lines
+    - SHOULD default to server components
+
+  hooks:
+    - MUST start with use
+    - MUST NOT be conditional
+
+# TAILWIND
+
+tailwind_rules:
+  styling:
+    - MUST use Tailwind
+    - MUST NOT use inline styles unless dynamic
+
+# UI COMPONENTS
+
+ui_components:
+  rules:
+    - MUST use shadcn/ui
+    - MUST NOT build custom primitives
+
+# SECURITY
+
+security:
+  rules:
+    - MUST validate input server-side
+    - MUST sanitize external data
+    - MUST prevent XSS and SQL injection
+
+# PERFORMANCE
+
+performance:
+  rules:
+    - SHOULD use server components by default
+    - MUST lazy load heavy components
+
+# ERROR HANDLING
+
+error_handling:
+  principles:
+    - MUST return { data, error }
+    - MUST NOT throw for recoverable errors
+
+# UI STATE
+
+ui_state_management:
+  principles:
+    - Single source of truth
+    - Parent fetches, children receive props
+    - MUST handle loading, error, success
+
+# AI CONSTRAINTS
+
+ai_constraints:
+  forbidden:
+    - Large deletions without justification
+    - Config changes without explanation
+    - Git destructive commands without permission
+
+# TESTING
+
+testing:
+  stack:
+    e2e: Playwright
+    
+
+  baseline:
+    required: false
+
+  policies:
+    no_false_green: true
