@@ -1,6 +1,8 @@
 # Guía de Contribución
 
 ## ⚠️ Reglas Críticas
+**Dependencias**
+- Este proyecto usa el configurador de ecosistemas [Gentleman AI](https://github.com/Gentleman-Programming/gentle-ai). **Es obligatorio usarlo para mantener consistencia en convenciones, código y documentación.**
 
 **GIT:**
 - NEVER ejecutar `git reset` (hard, soft, mixed) sin permiso explícito
@@ -13,6 +15,8 @@
 - Secrets/credentials hardcoded
 - console.log en código de producción
 - Error handling faltante
+
+
 
 ## Workflow
 
@@ -107,9 +111,15 @@ npx prisma generate   # Generate client
 
 Este proyecto usa Engram para memoria persistente:
 
-- `mem_save` — Guardar decisiones, bugs fixed, patterns establecidos
-- `mem_search` — Buscar decisiones pasadas
-- `mem_session_summary` — Resumen al cerrar sesión
+Guardar insights importantes para evitar repetir discusiones y mantener un historial de decisiones técnicas.
+subirlas al repositorio para que todos puedan acceder a ellas.
+```bash
+engram sync --import  # importar nuevos fragmentos
+engram sync # Exportar nuevas memorias como fragmento comprimido
+```
+**Primero ejecutar `engram sync --import` para traer nuevas memorias al proyecto, luego `engram sync` para exportar cualquier nueva memoria creada durante el desarrollo.**
+
+Para más información sobre Engram: ver [Engram Documentation](https://github.com/Gentleman-Programming/engram#quick-start)
 
 ## Pull Requests
 
