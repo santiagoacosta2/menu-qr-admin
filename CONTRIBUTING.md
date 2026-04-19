@@ -6,6 +6,8 @@
 - NEVER ejecutar `git reset` (hard, soft, mixed) sin permiso explícito
 - NEVER ejecutar `git rebase interactivo` sin permiso explícito
 - Antes de cualquier operación destructiva, STOP y PREGUNTAR
+- Iniciar GGA precommit hook para validar convenciones y de codigo
+
 
 **Code Review — REJECT si:**
 - Secrets/credentials hardcoded
@@ -35,6 +37,19 @@ Usar Conventional Commits:
 | `refactor:` | refactor |
 | `test:` | tests |
 | `chore:` | mantenimiento |
+
+# Pre-commit hook para validar convenciones:
+Inicair GGA para validar convenciones y código antes de cada commit:
+No funciona con powershell o cmd. Usar WSL o Git Bash.
+
+**Recomienndo usar Git Bash desde la terminnal de VSCode para evitar problemas con el hook.**
+```bash
+gga install             # Install git hook
+# Edit .gga to set your PROVIDER
+# Create AGENTS.md with your coding standards
+# Done — every commit gets reviewed 🎉
+```
+Para mas informacion sobre GGA: ver [GGA Documentation](https://github.com/Gentleman-Programming/gentleman-guardian-angel)
 
 ## SDD (Spec-Driven Development)
 
